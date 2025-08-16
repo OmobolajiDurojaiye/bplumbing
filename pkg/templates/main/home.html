@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BE Plumbing Services - Professional Plumbing Solutions</title>
+
+    <!-- Flatpickr CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
+    />
+
+    <!-- Inter Font for modern typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Custom CSS -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/main/base.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/main/home.css') }}"
+    />
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav class="nav">
+      <div class="nav-container">
+        <div class="nav-brand">BE PLUMBING</div>
+        <div class="nav-contact">
+          <span class="contact-label">Emergency Line</span>
+          <a href="tel:08142498896" class="contact-number">08142498896</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-container">
+        <div class="hero-content">
+          <h1 class="hero-title">
+            Professional Plumbing<br />When You Need It
+          </h1>
+          <p class="hero-subtitle">
+            Don't let a leak ruin your day. Fast, reliable, and professional
+            plumbing services across Nigeria. Book your appointment in 60
+            seconds.
+          </p>
+          <button id="cta-book-btn" class="btn-primary">
+            <span>Book Service</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M7 17L17 7M17 7H7M17 7V17"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </button>
+        </div>
+        <div class="hero-stats">
+          <div class="stat">
+            <div class="stat-number">24/7</div>
+            <div class="stat-label">Emergency Service</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number">500+</div>
+            <div class="stat-label">Jobs Completed</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number">5★</div>
+            <div class="stat-label">Customer Rating</div>
+          </div>
+        </div>
+      </div>
+      <!-- Curved Shape Divider -->
+      <div class="hero-shape">
+        <svg
+          data-name="Layer 1"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 1200 120"
+          preserveAspectRatio="none"
+        >
+          <path
+            d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-17,148.63-10.09,209.84,9.22,75.63,24.16,153.3,44.57,225.68,46.15,70.07,1.53,136.25-19.25,206.31-41.27V120H0V56.44Z"
+            class="shape-fill"
+          ></path>
+        </svg>
+      </div>
+    </section>
+
+    <!-- Booking Section -->
+    <section id="booking-section" class="booking-section" style="display: none">
+      <div class="booking-container">
+        <div class="booking-header">
+          <h2>Schedule Your Service</h2>
+          <p>Select your preferred date and time, then provide your details</p>
+        </div>
+
+        <!-- Step 1: Calendar -->
+        <div id="calendar-step" class="step-container">
+          <div class="step-header">
+            <div class="step-number">01</div>
+            <h3>Select Date & Time</h3>
+          </div>
+          <div class="calendar-wrapper">
+            <input type="text" id="calendar-input" style="display: none" />
+          </div>
+        </div>
+
+        <!-- Step 2: Form -->
+        <form id="booking-form" class="step-container" style="display: none">
+          <div class="step-header">
+            <div class="step-number">02</div>
+            <h3>Service Details</h3>
+          </div>
+
+          <input type="hidden" id="selected-date" name="date" />
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="name">Full Name</label>
+              <input type="text" id="name" name="name" required />
+            </div>
+
+            <div class="form-group">
+              <label for="phone">Phone Number</label>
+              <input type="tel" id="phone" name="phone" required />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="address">Service Address</label>
+            <input type="text" id="address" name="address" required />
+          </div>
+
+          <div class="form-group">
+            <label for="service">Service Type</label>
+            <select id="service" name="service" required>
+              <option value="" disabled selected>Select a service</option>
+              {% for service in services %}
+              <option value="{{ service }}">{{ service }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <button type="submit" class="btn-primary">
+            <span>Confirm Booking</span>
+          </button>
+        </form>
+
+        <!-- Success Message -->
+        <div
+          id="success-message"
+          class="success-container"
+          style="display: none"
+        >
+          <div class="success-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="12" r="10" fill="#10B981" />
+              <path
+                d="M9 12L11 14L15 10"
+                stroke="white"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </div>
+          <h3>Booking Confirmed</h3>
+          <p>We'll contact you shortly to confirm your appointment details.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services-section">
+      <div class="services-container">
+        <div class="section-header">
+          <h2>Our Services</h2>
+          <p>Comprehensive plumbing solutions for every need</p>
+        </div>
+
+        <div class="services-grid">
+          <div class="service-card">
+            <div class="service-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M12 2L2 7V10C2 16 6 20.88 12 22C18 20.88 22 16 22 10V7L12 2Z"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
+            <h3>Emergency Repairs</h3>
+            <p>
+              24/7 emergency response for urgent plumbing issues including burst
+              pipes, major leaks, and system failures.
+            </p>
+          </div>
+
+          <div class="service-card">
+            <div class="service-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M14 2H6C4.9 2 4 2.9 4 4V20C4 21.1 4.9 22 6 22H18C19.1 22 20 21.1 20 20V8L14 2Z"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M14 2V8H20"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M16 13H8"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M16 17H8"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M10 9H9H8"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
+            <h3>Professional Installation</h3>
+            <p>
+              Expert installation of fixtures, water heaters, pipes, and
+              complete bathroom renovations with warranty coverage.
+            </p>
+          </div>
+
+          <div class="service-card">
+            <div class="service-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+                <circle
+                  cx="12"
+                  cy="12"
+                  r="3"
+                  stroke="currentColor"
+                  stroke-width="2"
+                />
+                <path
+                  d="M12 1V6M12 18V23M4.22 4.22L7.76 7.76M16.24 16.24L19.78 19.78M1 12H6M18 12H23M4.22 19.78L7.76 16.24M16.24 7.76L19.78 4.22"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+              </svg>
+            </div>
+            <h3>Preventive Maintenance</h3>
+            <p>
+              Regular maintenance and inspection services to prevent issues
+              before they become costly problems.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-content">
+          <div class="footer-brand">BE PLUMBING</div>
+          <p>
+            &copy; 2025 BE Plumbing Services. Professional plumbing solutions
+            across Nigeria.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="{{ url_for('static', filename='js/main/home.js') }}"></script>
+  </body>
+</html>
