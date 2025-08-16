@@ -13,11 +13,6 @@ mail = Mail()
 def create_app():
     app = Flask(__name__, instance_relative_config=True, static_folder='static', template_folder='templates')     
 
-    try:
-        app.config.from_pyfile("config.py")
-    except FileNotFoundError:
-        app.config.from_object('config')
-
 
 
     csrf.init_app(app)
